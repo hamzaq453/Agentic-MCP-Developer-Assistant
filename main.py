@@ -5,6 +5,7 @@ import uvicorn
 from config.settings import settings
 from mcp_tools import get_mcp_tools_info
 from services import github_service, docker_service, filesystem_service
+from langchain_integration import service as langchain_service
 
 # Initialize FastAPI application
 app = FastAPI(
@@ -56,6 +57,7 @@ async def list_mcp_tools():
 app.include_router(github_service.router, prefix="/github", tags=["GitHub"])
 app.include_router(docker_service.router, prefix="/docker", tags=["Docker"])
 app.include_router(filesystem_service.router, prefix="/filesystem", tags=["Filesystem"])
+app.include_router(langchain_service.router, prefix="/ai", tags=["AI Agent"])
 
 # Initialize MCP Server (must be after all routes are defined)
 mcp_server = FastApiMCP(
